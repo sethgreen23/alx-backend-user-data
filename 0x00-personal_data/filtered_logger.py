@@ -7,8 +7,6 @@ from typing import List
 import logging
 import os
 import mysql.connector
-from dotenv import load_dotenv
-load_dotenv()
 
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
