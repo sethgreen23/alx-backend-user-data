@@ -60,10 +60,23 @@ def get_logger() -> logging.Logger:
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
-    """ connect to MySQL database """
+    """Get database connector"""
     return mysql.connector.connect(
-        host=os.getenv("PERSONAL_DATA_DB_HOST", "root"),
-        database=os.getenv("PERSONAL_DATA_DB_NAME"),
-        user=os.getenv("PERSONAL_DATA_DB_USERNAME", "localhost"),
-        password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
+        host=os.environ.get('PERSONAL_DATA_DB_HOST', 'localhost'),
+        database=os.environ.get('PERSONAL_DATA_DB_NAME'),
+        user=os.environ.get('PERSONAL_DATA_DB_USERNAME', 'root'),
+        password=os.environ.get('PERSONAL_DATA_DB_PASSWORD', '')  # Changed default to 'root'
     )
+
+def main() -> None:
+    """Main function"""
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT name, email, phone, ssn, password FROM users;")
+    for row in cursor:
+        logger = get_logger()
+        logger.log(logging.INFO, row)
+    
+
+if __name__ == '__main__':
+    main()
