@@ -65,8 +65,9 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         host=os.environ.get('PERSONAL_DATA_DB_HOST', 'localhost'),
         database=os.environ.get('PERSONAL_DATA_DB_NAME'),
         user=os.environ.get('PERSONAL_DATA_DB_USERNAME', 'root'),
-        password=os.environ.get('PERSONAL_DATA_DB_PASSWORD', '')  # Changed default to 'root'
+        password=os.environ.get('PERSONAL_DATA_DB_PASSWORD', '')
     )
+
 
 def main() -> None:
     """Main function"""
@@ -76,7 +77,8 @@ def main() -> None:
     for row in cursor:
         logger = get_logger()
         logger.log(logging.INFO, row)
-    
+    cursor.close()
+
 
 if __name__ == '__main__':
     main()
