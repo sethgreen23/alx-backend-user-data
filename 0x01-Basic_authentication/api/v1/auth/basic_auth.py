@@ -46,9 +46,9 @@ class BasicAuth(Auth):
         index = decoded_base64_authorization_header.find(':')
         if index == -1:
             return (None, None)
-        email = decoded_base64_authorization_header[:index]
-        password = decoded_base64_authorization_header[index + 1:]
-        return tuple(email, password)
+        credentials = decoded_base64_authorization_header.split(':', 1)
+        return (credentials[0], credentials[1]) if isinstance(
+            credentials, list) else (None, None)
 
     def user_object_from_credentials(self, user_email: str,
                                      user_pwd: str) -> TypeVar('User'):
