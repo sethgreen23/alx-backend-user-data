@@ -51,9 +51,9 @@ class BasicAuth(Auth):
                                      user_email: str, user_pwd: str
                                      ) -> TypeVar('User'):
         """ User object from credentials"""
-        if user_email is None:
+        if user_email is None or type(user_email) is not str:
             return None
-        if type(user_email) is not str:
+        if user_pwd is None or type(user_pwd) is not str:
             return None
         if User.search({'email': user_email}) == []:
             return None
