@@ -43,9 +43,12 @@ class BasicAuth(Auth):
             return (None, None)
         if type(decoded_base64_authorization_header) is not str:
             return (None, None)
-        if decoded_base64_authorization_header.find(':') == -1:
+        index = decoded_base64_authorization_header.find(':')
+        if index == -1:
             return (None, None)
-        return tuple(decoded_base64_authorization_header.split(':'))
+        email = decoded_base64_authorization_header[:index]
+        password = decoded_base64_authorization_header[index + 1:]
+        return tuple(email, password)
 
     def user_object_from_credentials(self, user_email: str,
                                      user_pwd: str) -> TypeVar('User'):
