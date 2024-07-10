@@ -3,7 +3,6 @@
 from flask import request
 from typing import List, TypeVar
 from api.v1.auth.auth import Auth
-from models.user import User
 import base64
 
 
@@ -55,6 +54,10 @@ class BasicAuth(Auth):
         """returns the User instance based on his email and password"""
         if not user_email or not isinstance(user_email, str)\
            or not user_pwd or not isinstance(user_pwd, str):
+            return None
+        try:
+            from models.user import User
+        except Exception:
             return None
         users = User.search({'email': user_email})
         if not users:
