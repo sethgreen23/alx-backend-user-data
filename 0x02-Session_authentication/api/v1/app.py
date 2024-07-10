@@ -28,6 +28,7 @@ def before_request_method():
     """Before request methos"""
     if auth is None:
         return
+    auth.current_user = auth.current_user(request)
     excluded_paths = ['/api/v1/status/',
                       '/api/v1/unauthorized/',
                       '/api/v1/forbidden/']
