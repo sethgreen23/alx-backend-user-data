@@ -30,7 +30,7 @@ class SessionExpAuth(SessionAuth):
 
     def user_id_for_session_id(self, session_id=None):
         """User id for session id"""
-        session_dictionary = self.user_id_for_session_id.get(session_id)
+        session_dictionary = self.user_id_by_session_id.get(session_id)
         if not session_id or not session_dictionary:
             return None
         created_at = session_dictionary.get('created_at')
